@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Neon Band</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            background-color: #222;
+            color: white;
+            padding-bottom: 70px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+        .header {
+            padding: 50px 20px;
+            text-align: center;
+            background: linear-gradient(to right, #1abc9c, #16a085);
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 50px;
+            text-transform: uppercase;
+            margin: 0 0 10px;
+            letter-spacing: 3px;
+        }
+
+        .header p {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* =========================
+           SECTIONS
+        ========================= */
+        section {
+            padding: 40px;
+            background: rgba(31, 31, 31, 0.9);
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        section h2 {
+            color: #00e676;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 30px;
+        }
+
+        section p {
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        /* =========================
+           BAND MEMBERS
+        ========================= */
+        .members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .member {
+            background: #292929;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #444;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 230, 118, 0.25);
+        }
+
+        .member h3 {
+            color: #1abc9c;
+            margin-bottom: 10px;
+        }
+
+        /* =========================
+           MUSIC PLAYER
+        ========================= */
+        .player-container {
+            background: rgba(31, 31, 31, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            margin: 30px auto;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .player-container h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: #00e676;
+            text-transform: uppercase;
+        }
+
+        #song-title {
+            font-size: 20px;
+            color: #fff;
+            margin: 20px 0;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .controls button {
+            width: 55px;
+            height: 55px;
+            border: none;
+            border-radius: 50%;
+            background-color: #1abc9c;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .controls button:hover {
+            background-color: #16a085;
+            transform: scale(1.08);
+        }
+
+        /* Progress bar */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #555;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 20px 0 10px;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, #1abc9c, #00e676);
+            border-radius: 10px;
+        }
+
+        /* Time */
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        /* Volume */
+        .volume-container {
+            margin-top: 20px;
+        }
+
+        .volume-container label {
+            margin-right: 10px;
+            color: #ddd;
+        }
+
+        .volume-slider {
+            width: 60%;
+            accent-color: #1abc9c;
+            cursor: pointer;
+        }
+
+        /* =========================
+           IMAGE GALLERY
+        ========================= */
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .image-gallery img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+
+        .image-gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* =========================
+           CONTACT FORM
+        ========================= */
+        #contact {
+            padding: 60px;
+        }
+
+        #contact-form {
+            max-width: 700px;
+            margin: auto;
+        }
+
+        #contact-form input,
+        #contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+        }
+
+        #contact-form textarea {
+            resize: vertical;
+        }
+
+        #contact-form input[type="submit"] {
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 17px;
+            transition: 0.3s;
+        }
+
+        #contact-form input[type="submit"]:hover {
+            background-color: #16a085;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+        .footer {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(to right, #1abc9c, #16a085);
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* =========================
+           RESPONSIVE DESIGN
+        ========================= */
+        @media screen and (max-width: 600px) {
+            .header h1 {
+                font-size: 35px;
+            }
+
+            .navbar a {
+                float: none;
+                width: 100%;
+            }
+
+            section {
+                padding: 25px 20px;
+                margin: 15px 10px;
+            }
+
+            #contact {
+                padding: 30px 20px;
+            }
+
+            .player-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+    <header class="header">
+        <h1>Neon Band</h1>
+        <p>Relax, enjoy, and listen to our music.</p>
+    </header>
+
+    <!-- =========================
+         NAVIGATION
+    ========================= -->
+    <nav class="navbar">
+        <a href="#home">Home</a>
+        <a href="#band">Meet the Band</a>
+        <a href="#playlist">Playlist</a>
+        <a href="#contact">Contact Us</a>
+    </nav>
+
+    <!-- =========================
+         HOME
+    ========================= -->
+    <section id="home">
+        <h2>Welcome to Neon Band</h2>
+
+        <p>
+            Neon Band is a vibrant and energetic group of 21-year-old musicians
+            who bring their unique sound and passion for music to life.
+            Founded with the mission to create music that resonates with people
+            from all walks of life, our band combines elements of pop, rock,
+            and indie to produce catchy melodies and heartfelt lyrics.
+        </p>
+
+        <p>
+            Our journey began in high school, where we discovered our love
+            for performing together. Since then, we have been dedicated to
+            perfecting our craft, writing original songs, and connecting
+            with our audience.
+        </p>
+
+        <p>
+            We believe in the power of music to inspire, uplift, and bring
+            people together. Our music is a reflection of our experiences,
+            dreams, and the world around us.
+        </p>
+
+        <p>
+            Whether it's an upbeat anthem that gets you dancing or a soulful
+            ballad that touches your heart, we aim to leave a lasting
+            impression through our sound.
+        </p>
+
+        <p>
+            As a band, we thrive on collaboration and creativity. Our diverse
+            backgrounds and influences shape our music, making each performance
+            a unique experience. We're not just musicians; we're friends who
+            share a common goal: to spread joy and positivity through our art.
+        </p>
+    </section>
+
+    <!-- =========================
+         BAND MEMBERS
+    ========================= -->
+    <section id="band">
+        <h2>Meet the Band</h2>
+
+        <p style="text-align: center;">
+            Get to know the members of Neon Band!
+            Our talented lineup includes:
+        </p>
+
+        <div class="members">
+
+            <div class="member">
+                <h3>Alex</h3>
+                <p><strong>Lead Vocals &amp; Guitar</strong></p>
+                <p>
+                    The heart and soul of our band, Alex brings raw emotion
+                    to every performance.
+                </p>
+            </div>
+
+            <div class="member">
+                <h3>Jamie</h3>
+                <p><strong>Drums</strong></p>
+                <p>
+                    With a passion for rhythm, Jamie keeps the beat and
+                    drives our songs forward.
+                </p>
+            </div>
+
+            <div class="member">
+                <h3>Sam</h3>
+                <p><strong>Bass Guitar</strong></p>
+                <p>
+                    The groove master, Sam adds depth and funk to our sound.
+                </p>
+            </div>
+
+            <div class="member">
+                <h3>Taylor</h3>
+                <p><strong>Keyboards</strong></p>
+                <p>
+                    A musical wizard, Taylor creates the rich textures
+                    that define our unique style.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =========================
+         PLAYLIST
+    ========================= -->
+    <section id="playlist">
+        <h2>Playlist</h2>
+
+        <div class="player-container">
+
+            <h1>Now Playing</h1>
+
+            <div id="song-title">
+                Song 1
+            </div>
+
+            <div class="controls">
+                <button id="prev-btn" aria-label="Previous song">
+                    ⏮️
+                </button>
+
+                <button id="play-btn" aria-label="Play or pause">
+                    ▶️
+                </button>
+
+                <button id="next-btn" aria-label="Next song">
+                    ⏭️
+                </button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div
+                class="progress-container"
+                id="progress-container"
+                aria-label="Song progress"
+            >
+                <div class="progress" id="progress"></div>
+            </div>
+
+            <!-- Time -->
+            <div class="time-display">
+                <span id="current-time">0:00</span>
+                <span id="song-duration">0:00</span>
+            </div>
+
+            <!-- Volume -->
+            <div class="volume-container">
+                <label for="volume">Volume:</label>
+
+                <input
+                    type="range"
+                    id="volume"
+                    class="volume-slider"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="1"
+                >
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =========================
+         MUSIC INSPIRATIONS
+    ========================= -->
+    <section id="inspirations">
+        <h2>Music Inspirations</h2>
+
+        <p style="text-align: center;">
+            Our music is inspired by creativity, live performances,
+            musical instruments, and the energy of our fans.
+        </p>
+
+        <div class="image-gallery">
+
+            <img
+                src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=400&q=80"
+                alt="Musical instruments"
+            >
+
+            <img
+                src="https://images.unsplash.com/photo-1524650359799-842906ca1c06?auto=format&fit=crop&w=400&q=80"
+                alt="Guitar"
+            >
+
+            <img
+                src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=400&q=80"
+                alt="Drums"
+            >
+
+            <img
+                src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=400&q=80"
+                alt="Piano"
+            >
+
+            <img
+                src="https://images.unsplash.com/photo-1460039230329-eb070fc6c77c?auto=format&fit=crop&w=400&q=80"
+                alt="Live music"
+            >
+
+            <img
+                src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=400&q=80"
+                alt="Music performance"
+            >
+
+        </div>
+    </section>
+
+    <!-- =========================
+         CONTACT
+    ========================= -->
+    <section id="contact">
+        <h2>Contact Us</h2>
+
+        <form id="contact-form">
+
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Your Name"
+                required
+            >
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Your Email"
+                required
+            >
+
+            <textarea
+                id="message"
+                name="message"
+                rows="5"
+                placeholder="Your Message"
+                required
+            ></textarea>
+
+            <input
+                type="submit"
+                value="Send Message"
+            >
+
+        </form>
+    </section>
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+    <footer class="footer">
+        &copy; 2024 Neon Band. All rights reserved.
+    </footer>
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+    <script>
+        const songs = [
+            {
+                title: "Song 1",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+            },
+            {
+                title: "Song 2",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+            },
+            {
+                title: "Song 3",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+            }
+        ];
+
+        let currentSongIndex = 0;
+
+        const audio = new Audio();
+
+        const playButton = document.getElementById("play-btn");
+        const prevButton = document.getElementById("prev-btn");
+        const nextButton = document.getElementById("next-btn");
+
+        const songTitle = document.getElementById("song-title");
+        const currentTimeDisplay = document.getElementById("current-time");
+        const songDurationDisplay = document.getElementById("song-duration");
+
+        const volumeSlider = document.getElementById("volume");
+        const progressContainer = document.getElementById("progress-container");
+        const progress = document.getElementById("progress");
+
+        /* =========================
+           LOAD SONG
+        ========================= */
+        function loadSong(index) {
+            audio.src = songs[index].src;
+            songTitle.textContent = songs[index].title;
+
+            currentTimeDisplay.textContent = "0:00";
+            songDurationDisplay.textContent = "0:00";
+            progress.style.width = "0%";
+
+            audio.load();
+        }
+
+        /* =========================
+           PLAY SONG
+        ========================= */
+        function playSong() {
+            audio.play()
+                .then(() => {
+                    playButton.textContent = "⏸️";
+                })
+                .catch(error => {
+                    console.error("Unable to play audio:", error);
+                });
+        }
+
+        /* =========================
+           PAUSE SONG
+        ========================= */
+        function pauseSong() {
+            audio.pause();
+            playButton.textContent = "▶️";
+        }
+
+        /* =========================
+           PLAY / PAUSE BUTTON
+        ========================= */
+        playButton.addEventListener("click", () => {
+            if (audio.paused) {
+                playSong();
+            } else {
+                pauseSong();
+            }
+        });
+
+        /* =========================
+           PREVIOUS BUTTON
+        ========================= */
+        prevButton.addEventListener("click", () => {
+            currentSongIndex =
+                (currentSongIndex - 1 + songs.length) % songs.length;
+
+            loadSong(currentSongIndex);
+            playSong();
+        });
+
+        /* =========================
+           NEXT BUTTON
+        ========================= */
+        nextButton.addEventListener("click", () => {
+            currentSongIndex =
+                (currentSongIndex + 1) % songs.length;
+
+            loadSong(currentSongIndex);
+            playSong();
+        });
+
+        /* =========================
+           SONG ENDS
+        ========================= */
+        audio.addEventListener("ended", () => {
+            currentSongIndex =
+                (currentSongIndex + 1) % songs.length;
+
+            loadSong(currentSongIndex);
+            playSong();
+        });
+
+        /* =========================
+           SONG METADATA
+        ========================= */
+        audio.addEventListener("loadedmetadata", () => {
+            if (isFinite(audio.duration)) {
+                songDurationDisplay.textContent =
+                    formatTime(audio.duration);
+            }
+
+            progress.style.width = "0%";
+        });
+
+        /* =========================
+           UPDATE PROGRESS
+        ========================= */
+        audio.addEventListener("timeupdate", () => {
+            if (!isNaN(audio.duration) && audio.duration > 0) {
+
+                const currentTime = audio.currentTime;
+
+                currentTimeDisplay.textContent =
+                    formatTime(currentTime);
+
+                const percentage =
+                    (currentTime / audio.duration) * 100;
+
+                progress.style.width = percentage + "%";
+            }
+        });
+
+        /* =========================
+           PROGRESS BAR SEEK
+        ========================= */
+        progressContainer.addEventListener("click", (event) => {
+
+            if (!audio.duration) {
+                return;
+            }
+
+            const width =
+                progressContainer.clientWidth;
+
+            const clickX =
+                event.offsetX;
+
+            const duration =
+                audio.duration;
+
+            audio.currentTime =
+                (clickX / width) * duration;
+        });
+
+        /* =========================
+           VOLUME CONTROL
+        ========================= */
+        volumeSlider.addEventListener("input", (event) => {
+            audio.volume = event.target.value;
+        });
+
+        /* =========================
+           FORMAT TIME
+        ========================= */
+        function formatTime(seconds) {
+
+            if (!isFinite(seconds)) {
+                return "0:00";
+            }
+
+            const minutes =
+                Math.floor(seconds / 60);
+
+            const secs =
+                Math.floor(seconds % 60);
+
+            return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+        }
+
+        /* =========================
+           CONTACT FORM
+        ========================= */
+        const contactForm =
+            document.getElementById("contact-form");
+
+        contactForm.addEventListener("submit", (event) => {
+
+            event.preventDefault();
+
+            alert("Thank you for contacting Neon Band!");
+
+            contactForm.reset();
+        });
+
+        /* =========================
+           INITIALIZE PLAYER
+        ========================= */
+        loadSong(currentSongIndex);
+
+        audio.volume = volumeSlider.value;
+    </script>
+
+</body>
+</html>
